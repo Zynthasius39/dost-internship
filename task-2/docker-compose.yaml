@@ -1,0 +1,43 @@
+services:
+  reverse-proxy:
+    image: docker.io/library/nginx:1.29.6-alpine
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx/docker.dost.edu.az.conf:/etc/nginx/conf.d/docker.dost.edu.az.conf:ro
+      - ./logs/nginx:/var/log/nginx
+    networks:
+      api:
+    restart: unless-stopped
+  application:
+    build:
+      dockerfile: php-fpm.Dockerfile
+    volumes:
+      - ./php-fpm/html:/var/www/html:ro
+      - ./php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+      - ./logs/php-fpm:/var/log/php-fpm
+    networks:
+      api:
+      db:
+    restart: unless-stopped
+  database:
+    image: docker.io/library/mysql:8.0.45-bookworm
+    env_file: ./mysql.env
+    volumes:
+      - ./logs/mysql:/var/log/mysql
+      - db-data:/var/lib/mysql
+    networks:
+      db:
+    secrets:
+      - mysql-root
+    restart: unless-stopped
+
+volumes:
+  db-data:
+networks:
+  api:
+  db:
+    internal: true
+secrets:
+  mysql-root:
+    file: ./secrets/mysql-root

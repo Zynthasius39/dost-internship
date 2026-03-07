@@ -1,0 +1,16 @@
+# LibreWolf data
+browser-testing/librewolf-data/
+browser-testing/Downloads/
+
+# Generated openssl files
+openssl/openssl.cnf
+openssl/pki/
+
+# Generate haproxy files
+haproxy/haproxy.cfg
+haproxy/keepalived.conf
+
+# Generated script files
+virt-scripts/user-data
+virt-scripts/vm-cnt
+virt-scripts/keys/

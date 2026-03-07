@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PORT=8001
+PKI="$HOME/pki"
+PKI_ICA="$PKI/ica/web"
+LOG_FILE=/var/log/ocsp.log
+
+sudo touch $LOG_FILE
+sudo chown $(whoami):$(whoami) "$LOG_FILE"
+
+exec openssl ocsp \
+  -index "$PKI_ICA/index.txt" \
+  -port $PORT \
+  -rsigner "$PKI_ICA/certs/ocsp.crt" \
+  -rkey "$PKI_ICA/private/ocsp.key" \
+  -CA "$PKI_ICA/certs/ica-web.crt" \
+  -ignore_err \
+  2>&1 | tee "$LOG_FILE"
