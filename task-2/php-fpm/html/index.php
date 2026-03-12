@@ -11,10 +11,14 @@ $tests = [];
 
 $tests['php_version'] = PHP_VERSION;
 
-$dsn = getenv('DATABASE_URL');
-if ($dsn) {
+$host     = getenv('MYSQL_HOST');
+$user     = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+$db       = getenv('MYSQL_DATABASE');
+
+if ($host && $user && $password && $db) {
     try {
-        $pdo = new PDO($dsn);
+        $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
         $tests['database'] = 'Connected OK';
     } catch (Exception $e) {
         $tests['database'] = 'FAILED: ' . $e->getMessage();
