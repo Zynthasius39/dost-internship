@@ -1,0 +1,7 @@
+---
+- name: Provision VMs on a KVM
+  hosts: localhost
+  vars_files:
+    - ../vars/nodes.yml
+  roles:
+    - vm

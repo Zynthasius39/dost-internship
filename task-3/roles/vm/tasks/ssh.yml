@@ -1,0 +1,6 @@
+---
+- name: Generate an OpenSSH keypair
+  community.crypto.openssh_keypair:
+    path: "{{ ssh_private_key }}"
+    type: ed25519
+  register: ssh_keygen

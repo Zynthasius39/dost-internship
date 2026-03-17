@@ -1,0 +1,16 @@
+---
+- name: Generate cloud-init
+  template:
+    src: cloud-init.j2
+    dest: "{{ ci_file_path }}"
+  vars:
+    ssh_authorized_keys:
+      - "{{ ssh_keygen.public_key }}"
+
+- name: Generate network-config
+  template:
+    src: network-config.j2
+    dest: "{{ nc_file_path }}"
+  vars:
+    ip_addresses:
+      - "{{ node.ip }}"

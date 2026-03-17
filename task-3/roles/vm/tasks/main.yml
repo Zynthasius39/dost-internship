@@ -1,0 +1,9 @@
+---
+- name: SSH Keygen
+  include_tasks: ssh.yml
+
+- name: Virt Install
+  include_tasks: install.yml
+  loop: "{{ nodes }}"
+  loop_control:
+    loop_var: node

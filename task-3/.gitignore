@@ -1,3 +1,14 @@
+#
+# Ansible
+#
+
+# Generated keys
+keys/
+
+#
+# Terraform
+#
+
 # Local .terraform directories
 .terraform/
 

@@ -1,0 +1,17 @@
+---
+- name: Create a volume with a backing image
+  community.libvirt.virt_volume:
+    uri: "{{ uri }}"
+    pool: "{{ vol_pool }}"
+    command: create
+    xml: |
+      <volume type='file'>
+        <name>{{ node.name }}.qcow2</name>
+        <capacity unit='{{ vol_capacity_unit }}'>{{ vol_capacity }}</capacity>
+        <target>
+          <format type='qcow2'/>
+        </target>
+        <backingStore>
+          <path>{{ base_image }}</path>
+        </backingStore>
+      </volume>

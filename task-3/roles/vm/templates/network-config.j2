@@ -1,0 +1,12 @@
+network:
+  version: 2
+  ethernets:
+    eth0:
+      match:
+        macaddress: {{ node.mac }}
+      dhcp4: false
+      addresses: {{ ip_addresses | to_json }}
+      gateway4: {{ gateway }}
+      nameservers:
+        search: {{ nameservers_search | to_json }}
+        addresses: {{ nameservers_addresses | to_json }}
