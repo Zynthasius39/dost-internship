@@ -8,5 +8,5 @@ network:
       addresses: {{ ip_addresses | to_json }}
       gateway4: {{ gateway }}
       nameservers:
-        search: {{ nameservers_search | to_json }}
-        addresses: {{ nameservers_addresses | to_json }}
+        search: {{ nameservers.search | to_json }}
+        addresses: {{ nameservers.addresses | to_json }}

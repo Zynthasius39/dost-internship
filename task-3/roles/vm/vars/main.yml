@@ -1,6 +1,7 @@
 uri: qemu:///system
 vol_pool: ISO
-net_name: default
+network: default
 
 ci_file_path: "/tmp/cloud-init-{{ node.name }}.yml"
+md_file_path: "/tmp/meta-data-{{ node.name }}.yml"
 nc_file_path: "/tmp/network-config-{{ node.name }}.yml"

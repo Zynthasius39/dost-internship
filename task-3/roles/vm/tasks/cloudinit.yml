@@ -7,10 +7,17 @@
     ssh_authorized_keys:
       - "{{ ssh_keygen.public_key }}"
 
+- name: Generate meta-data
+  copy:
+    content: |
+      instance-id: {{ node.name }}
+      local-hostname: {{ node.name }}
+    dest: "{{ md_file_path }}"
+
 - name: Generate network-config
   template:
     src: network-config.j2
     dest: "{{ nc_file_path }}"
   vars:
     ip_addresses:
-      - "{{ node.ip }}"
+      - "{{ node.ip }}{{ cidr }}"

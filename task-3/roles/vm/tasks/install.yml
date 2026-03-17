@@ -1,87 +1,26 @@
 ---
-- name: Define a VM
-  community.libvirt.virt_install:
-    name: "{{ node.name }}"
-    memory: "{{ node.memory }}"
-    vcpus: "{{ node.vcpu }}"
-    autostart: true
-    noreboot: true
-    features:
-      acpi: true
-      apic:
-        eoi: on
-      vmport:
-        state: off
-    clock:
-      offset: utc
-      timers:
-        - name: rtc
-          present: yes
-          tickpolicy: catchup
-        - name: pit
-          present: yes
-          tickpolicy: delay
-        - name: hpet
-          present: no
-    osinfo:
-      name: debian13
-    console:
-    disks:
-      - backing_store: "{{ base_image }}"
-        pool: "{{ vol_pool }}"
-        size: "{{ vol_capacity }}"
-    networks:
-      - model:
-          type: virtio
-        network: "{{ net_name }}"
-        mac:
-          address: "{{ node.mac }}"
-    # cdrom: /home/zynf/Documents/ISO/cachyos-desktop-linux-251129.iso
-    cloud_init:
-      user_data: |
-        #cloud-config
-        hostname: {{ node.name }}
-        create_hostname_file: true
+- name: Generate cloud-init files
+  include_tasks: cloudinit.yml
 
-        allow_public_ssh_keys: true
-        disable_root: true
-        disable_root_opts: no-port-forwarding,no-agent-forwarding,no-X11-forwarding
-        package_update: true
-        packages:
-          - ansible
-        ssh_deletekeys: true
-        ssh_genkeytypes:
-          - rsa
-          - ecdsa
-          - ed25519
-        ssh_publish_hostkeys:
-          blacklist:
-            - rsa
-          enabled: true
-        ssh_quiet_keygen: true
-
-        users:
-          - name: default
-            sudo: ALL=(ALL) NOPASSWD:ALL
-            ssh_authorized_keys: ["{{ ssh_keygen.public_key }}"]
-      meta_data: |
-        instance-id: "{{ node.name }}"
-        local-hostname: "{{ node.name }}"
-      network_config: |
-        network:
-          version: 2
-          ethernets:
-            eth0:
-              match:
-                macaddress: "{{ node.mac }}"
-              dhcp4: false
-              addresses: ["{{ node.ip }}"]
-              gateway4: {{ gateway }}
-              nameservers:
-                search: {{ nameservers.search }}
-                addresses: {{ nameservers.addresses }}
-
-- name: Start the VM
-  community.libvirt.virt:
-    name: "{{ node.name }}"
-    state: running
+- name: Install a VM
+  ansible.builtin.command:
+    cmd: >
+      virt-install 
+      --connect {{ uri }}
+      --name {{ node.name }}
+      --memory {{ node.memory }}
+      --vcpus {{ node.vcpu }}
+      --noreboot
+      --noautoconsole
+      --graphics none
+      --os-variant name={{ os_name }}
+      --disk=size={{ vol_capacity }},backing_store="{{ base_image }}",pool={{ vol_pool }}
+      --network network={{ network }},model=virtio,mac={{ node.mac }}
+      --cloud-init user-data="{{ ci_file_path }},meta-data={{ md_file_path }},network-config={{ nc_file_path }}"
+  args:
+    creates: /etc/libvirt/qemu/{{ node.name }}.xml
+ 
+# - name: Start the VM
+#   community.libvirt.virt:
+#     name: "{{ node.name }}"
+#     state: running
