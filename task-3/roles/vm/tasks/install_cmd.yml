@@ -1,0 +1,20 @@
+---
+- name: Generate cloud-init files
+  include_tasks: cloudinit.yml
+
+- name: Install a VM
+  ansible.builtin.command:
+    cmd: >
+      virt-install 
+      --connect {{ uri }}
+      --name {{ node.name }}
+      --memory {{ node.memory }}
+      --vcpus {{ node.vcpu }}
+      --noautoconsole
+      --wait
+      --os-variant name={{ os_name }}
+      --disk=size={{ vol_capacity }},backing_store="{{ base_image }}",pool={{ vol_pool }}
+      --network network={{ network }},model=virtio,mac={{ node.mac }}
+      --cloud-init user-data="{{ ci_file_path }},meta-data={{ md_file_path }},network-config={{ nc_file_path }}"
+  args:
+    creates: /etc/libvirt/qemu/{{ node.name }}.xml

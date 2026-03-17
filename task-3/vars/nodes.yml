@@ -32,5 +32,4 @@ os_name: debian13
 vol_capacity: 10
 base_image: /home/zynf/Documents/ISO/debian-13-genericcloud-amd64.qcow2
 
-ssh_public_key: "{{ 'keys/k8s-eclair.pub' | realpath }}"
-ssh_private_key: "{{ 'keys/k8s-eclair.key' | realpath }}"
+ssh_private_key: "{{ 'keys/k8s-eclair' | realpath }}"
