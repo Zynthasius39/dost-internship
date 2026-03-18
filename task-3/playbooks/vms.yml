@@ -4,4 +4,7 @@
   vars_files:
     - ../vars/nodes.yml
   roles:
-    - vm
+    - role: vm_provision
+      tag: provision
+    - role: vm_destroy
+      tag: destroy

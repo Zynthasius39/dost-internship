@@ -1,6 +1,7 @@
 ---
 - name: Define a VM
   community.libvirt.virt_install:
+    uri: "{{ uri }}"
     name: "{{ node.name }}"
     memory: "{{ node.memory }}"
     vcpus: "{{ node.vcpu }}"

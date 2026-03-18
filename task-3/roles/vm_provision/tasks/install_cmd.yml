@@ -18,3 +18,12 @@
       --cloud-init user-data="{{ ci_file_path }},meta-data={{ md_file_path }},network-config={{ nc_file_path }}"
   args:
     creates: /etc/libvirt/qemu/{{ node.name }}.xml
+
+- name: Clean up the cloud-init files
+  ansible.builtin.file:
+    state: absent
+    path: "{{ item }}"
+  loop:
+    - "{{ ci_file_path }}"
+    - "{{ md_file_path }}"
+    - "{{ nc_file_path }}"

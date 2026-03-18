@@ -7,3 +7,9 @@
   loop: "{{ nodes }}"
   loop_control:
     loop_var: node
+
+# - name: Virt Install (virt-install cmd)
+#   include_tasks: install_cmd.yml
+#   loop: "{{ nodes }}"
+#   loop_control:
+#     loop_var: node

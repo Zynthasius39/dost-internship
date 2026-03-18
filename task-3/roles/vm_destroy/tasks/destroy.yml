@@ -1,0 +1,7 @@
+---
+- name: Undefine the VMs
+  community.libvirt.virt:
+    uri: "{{ uri }}"
+    command: undefine
+    name: "{{ node.name }}"
+    force: true
