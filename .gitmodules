@@ -1,3 +1,0 @@
-[submodule "task-3/kubespray"]
-	path = task-3/kubespray
-	url = https://github.com/kubernetes-sigs/kubespray
