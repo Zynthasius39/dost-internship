@@ -5,6 +5,9 @@
 # Generated keys
 keys/
 
+# Kubespray
+inventory/**/credentials/
+
 #
 # Terraform
 #
