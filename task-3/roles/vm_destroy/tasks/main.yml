@@ -4,4 +4,8 @@
     uri: "{{ uri }}"
     command: undefine
     name: "{{ node.name }}"
-    force: true
+    flags:
+      - delete_volumes
+  loop: "{{ nodes }}"
+  loop_control:
+    loop_var: node

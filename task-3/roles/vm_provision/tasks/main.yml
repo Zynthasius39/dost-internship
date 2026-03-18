@@ -1,15 +1,11 @@
 ---
-- name: SSH Keygen
-  include_tasks: ssh.yml
+- name: Enable IPv4 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+    state: present
+    reload: true
 
-- name: Virt Install
-  include_tasks: install.yml
-  loop: "{{ nodes }}"
-  loop_control:
-    loop_var: node
-
-# - name: Virt Install (virt-install cmd)
-#   include_tasks: install_cmd.yml
-#   loop: "{{ nodes }}"
-#   loop_control:
-#     loop_var: node
+- name: Configure ufw
+  include_tasks: ufw.yml
