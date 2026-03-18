@@ -1,4 +1,4 @@
-# Tapşırıq siyahısı
+# Docker Compose
 
 ---
 ## Tələblər
@@ -27,9 +27,11 @@ for MYSQL_USER in root dostdev; do
 done
 ```
 
-## Reverse Proxy Layer
+## Tapşırıq siyahısı
 
-### NGINX container
+### Reverse Proxy Layer
+
+#### NGINX container
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -41,7 +43,7 @@ services:
   ...
 ```
 
-### Hostda 8080 portundan açılmalıdır
+#### Hostda 8080 portundan açılmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -59,7 +61,7 @@ services:
   ...
 ```
 
-### PHP requestləri application container-inə forward etməlidir
+#### PHP requestləri application container-inə forward etməlidir
 
 _[nginx/docker.host.edu.az.conf](nginx/docker.dost.edu.az.conf)_
 ``` diff
@@ -73,7 +75,7 @@ _[nginx/docker.host.edu.az.conf](nginx/docker.dost.edu.az.conf)_
   ...
 ```
 
-### Config external fayldan gəlməlidir (image içində olmamalıdır)
+#### Config external fayldan gəlməlidir (image içində olmamalıdır)
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -90,7 +92,7 @@ services:
     restart: unless-stopped
 ```
 
-### Container database şəbəkəsinə çıxış edə bilməməlidir
+#### Container database şəbəkəsinə çıxış edə bilməməlidir
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -105,9 +107,9 @@ services:
   ...
 ```
 
-## Application Layer
+### Application Layer
 
-### PHP-FPM container
+#### PHP-FPM container
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -128,7 +130,7 @@ _[Dockerfile](php-fpm/Dockerfile)_
   ...
 ```
 
-### Source kod hostdan mount edilməlidir
+#### Source kod hostdan mount edilməlidir
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -140,7 +142,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### DB ilə əlaqə qurmalıdır
+#### DB ilə əlaqə qurmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -174,7 +176,7 @@ curl -H "Host: docker.dost.edu.az" http://localhost:8080
 }
 ```
 
-### Healthcheck olmalıdır
+#### Healthcheck olmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -197,7 +199,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### Container crash edərsə restart olunmalıdır
+#### Container crash edərsə restart olunmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -213,7 +215,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### Root user ilə işləməməlidir
+#### Root user ilə işləməməlidir
 
 Root user ilə işləməyəndə docker secret-i oxumaq olmurdu ona görə custom entrypoint yazdım. Əsas *php-fpm* prosesi *www-data* kimi işləyir.
 
@@ -242,9 +244,9 @@ root         963       1  0 23:05 ?        00:00:00 [dpkg-preconfigu] <defunct>
 root        1066       0 50 23:05 ?        00:00:00 ps -ef
 ```
 
-## Database Layer
+### Database Layer
 
-### MySQL 8 container
+#### MySQL 8 container
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -256,7 +258,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### Data persistent olmalıdır
+#### Data persistent olmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -268,9 +270,9 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### Root password plain text yazılmamalıdır
+#### Root password plain text yazılmamalıdır
 
-### Application user ayrıca yaradılmalıdır
+#### Application user ayrıca yaradılmalıdır
 
 _[mysql.env](mysql.env)_
 ``` diff
@@ -280,7 +282,7 @@ _[mysql.env](mysql.env)_
   MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root
 ```
 
-### DB container internetə çıxışı olmamalıdır
+#### DB container internetə çıxışı olmamalıdır
 
 ``` diff
   ...
@@ -291,7 +293,7 @@ _[mysql.env](mysql.env)_
   ...
 ```
 
-### Healthcheck olmalıdır
+#### Healthcheck olmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -306,9 +308,9 @@ _[docker-compose.yaml](docker-compose.yaml)_
     image: docker.io/library/mysql:8.0.45-bookworm
 ```
 
-## Network tələbləri
+### Network tələbləri
 
-### Minimum 2 ayrı Docker network
+#### Minimum 2 ayrı Docker network
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -318,7 +320,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
 +     internal: true
 ```
 
-### Frontend DB-yə birbaşa qoşula bilməməlidir
+#### Frontend DB-yə birbaşa qoşula bilməməlidir
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -333,7 +335,7 @@ services:
   ...
 ```
 
-### Application həm DB, həm Front network-də olmalıdır
+#### Application həm DB, həm Front network-də olmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -347,9 +349,9 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-## Təhlükəsizlik tələbləri
+### Təhlükəsizlik tələbləri
 
-### Secrets istifadə olunmalıdır
+#### Secrets istifadə olunmalıdır
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -362,11 +364,11 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-## Production-a hazırlıq
+### Production-a hazırlıq
 
 Aşağıdakılar əlavə olunmalıdır.
 
-### Resource limits
+#### Resource limits
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -409,7 +411,7 @@ services:
   ...
 ```
 
-### Proper restart policies
+#### Proper restart policies
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -431,7 +433,7 @@ services:
   ...
 ```
 
-### Named volumes
+#### Named volumes
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -444,7 +446,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### .env istifadəsi
+#### .env istifadəsi
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
@@ -460,7 +462,7 @@ _[docker-compose.yaml](docker-compose.yaml)_
   ...
 ```
 
-### Logging stdout/stderr
+#### Logging stdout/stderr
 
 _[docker-compose.yaml](docker-compose.yaml)_
 ``` diff
