@@ -1,12 +1,11 @@
 ---
-- name: Define a VM
+- name: "Install the VM - node/{{ node.name }}"
   community.libvirt.virt_install:
     uri: "{{ uri }}"
     name: "{{ node.name }}"
     memory: "{{ node.memory }}"
     vcpus: "{{ node.vcpu }}"
     autostart: true
-    # noreboot: true
     features:
       acpi: true
       apic:
@@ -27,7 +26,9 @@
     osinfo:
       name: debian13
     graphics:
-      type: spice
+      # Spice is not supported for
+      # qemu-kvm-9.1.0-29.el9_7.6.alma.1
+      type: vnc
     disks:
       - backing_store: "{{ base_image }}"
         pool: "{{ vol_pool }}"
@@ -38,7 +39,6 @@
         network: "{{ network }}"
         mac:
           address: "{{ node.mac }}"
-    # cdrom: /home/zynf/Documents/ISO/cachyos-desktop-linux-251129.iso
     cloud_init:
       user_data: |
         #cloud-config
@@ -77,7 +77,7 @@
               match:
                 macaddress: {{ node.mac }}
               dhcp4: false
-              addresses: ["{{ node.ip }}{{ cidr }}"]
+              addresses: ["{{ node.ip }}{{ node_subnet_prefix }}"]
               gateway4: {{ gateway }}
               nameservers:
                 search: {{ nameservers.search | to_json }}

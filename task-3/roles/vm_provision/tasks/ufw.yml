@@ -7,7 +7,7 @@
 - name: Add rules (All nodes)
   community.general.ufw:
     rule: allow
-    src: "{{ node_subnet }}"
+    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
@@ -21,7 +21,7 @@
   when: inventory_hostname in groups['kube_control_plane']
   community.general.ufw:
     rule: allow
-    src: "{{ node_subnet }}"
+    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
@@ -39,7 +39,7 @@
   when: inventory_hostname in groups['kube_node']
   community.general.ufw:
     rule: allow
-    src: "{{ node_subnet }}"
+    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
@@ -50,7 +50,7 @@
 - name: Add rules for Calico (All nodes)
   community.general.ufw:
     rule: allow
-    src: "{{ node_subnet }}"
+    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: "{{ item.proto }}"

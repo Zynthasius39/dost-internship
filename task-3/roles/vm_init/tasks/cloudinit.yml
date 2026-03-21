@@ -20,4 +20,4 @@
     dest: "{{ nc_file_path }}"
   vars:
     ip_addresses:
-      - "{{ node.ip }}{{ cidr }}"
+      - "{{ node.ip }}{{ node_subnet_prefix }}"

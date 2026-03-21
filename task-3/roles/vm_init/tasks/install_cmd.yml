@@ -1,8 +1,8 @@
 ---
-- name: Generate cloud-init files
+- name: "Generate cloud-init for node/{{ node.name }}"
   include_tasks: cloudinit.yml
 
-- name: Install a VM
+- name: "Install the VM - node/{{ node.name }}"
   ansible.builtin.command:
     cmd: >
       virt-install 
@@ -12,6 +12,7 @@
       --vcpus {{ node.vcpu }}
       --noautoconsole
       --wait
+      --graphics vnc
       --os-variant name={{ os_name }}
       --disk=size={{ vol_capacity }},backing_store="{{ base_image }}",pool={{ vol_pool }}
       --network network={{ network }},model=virtio,mac={{ node.mac }}
@@ -19,7 +20,7 @@
   args:
     creates: /etc/libvirt/qemu/{{ node.name }}.xml
 
-- name: Clean up the cloud-init files
+- name: "Clean up the cloud-init files for node/{{ node.name }}"
   ansible.builtin.file:
     state: absent
     path: "{{ item }}"
