@@ -21,7 +21,7 @@ nodes:
     role: worker
  
 cluster_codename: eclair  # Android 2
-node_subnet_prefix: /24
+node_subnet_prefix: /20
 gateway: 10.0.16.1
 nameservers:
   search:

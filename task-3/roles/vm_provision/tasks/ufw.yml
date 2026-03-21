@@ -4,32 +4,56 @@
     name: ufw
     state: present
 
+- name: Disable ufw
+  community.general.ufw:
+    state: disabled
+
+- name: Reset ufw
+  community.general.ufw:
+    state: reset
+
+- name: Add rules for Trusted (All nodes)
+  community.general.ufw:
+    rule: allow
+    src: "{{ item[0] }}"
+    port: "{{ item[1].port }}"
+    comment: "{{ item[1].comment }}"
+    proto: tcp
+  loop: "{{ ([nodes_subnet] + trusted_external_subnets) | product([
+    {'port': '22', 'comment': 'OpenSSH'}]) | list 
+  }}"
+
 - name: Add rules (All nodes)
   community.general.ufw:
     rule: allow
-    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
   loop:
-    - port: 22
-      comment: OpenSSH
     - port: 10250
       comment: Kubelet API
+
+- name: Add rules for Trusted (Control plane)
+  when: inventory_hostname in groups['kube_control_plane']
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    comment: "{{ item.comment }}"
+    proto: tcp
+  loop:
+    - port: 6443
+      comment: Kubernetes API
 
 - name: Add rules (Control plane)
   when: inventory_hostname in groups['kube_control_plane']
   community.general.ufw:
     rule: allow
-    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
   loop:
     - port: 2379:2380
-      comment: etcd client/peer port
-    - port: 6443
-      comment: Kubernetes API
+      comment: etc client/peer port
     - port: 10257
       comment: kube-scheduler
     - port: 10259
@@ -39,7 +63,6 @@
   when: inventory_hostname in groups['kube_node']
   community.general.ufw:
     rule: allow
-    src: "{{ node_network }}"
     port: "{{ item.port }}"
     comment: "{{ item.comment }}"
     proto: tcp
@@ -47,17 +70,16 @@
     - port: 30000:32767
       comment: kube nodePort range
 
-- name: Add rules for Calico (All nodes)
-  community.general.ufw:
-    rule: allow
-    src: "{{ node_network }}"
-    port: "{{ item.port }}"
-    comment: "{{ item.comment }}"
-    proto: "{{ item.proto }}"
-  loop:
-    - port: 4789
-      comment: Calico CNI with VXLAN enabled
-      proto: udp
+# - name: Add rules for Calico (All nodes)
+#   community.general.ufw:
+#     rule: allow
+#     port: "{{ item.port }}"
+#     comment: "{{ item.comment }}"
+#     proto: "{{ item.proto }}"
+#   loop:
+#     - port: 4789
+#       comment: Calico CNI with VXLAN enabled
+#       proto: udp
 
 - name: Enable ufw
   community.general.ufw:

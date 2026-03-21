@@ -1,0 +1,4 @@
+trusted_subnets:
+  - nodes_subnet
+  - kube_service_addresses
+  - kube_pods_subnet
