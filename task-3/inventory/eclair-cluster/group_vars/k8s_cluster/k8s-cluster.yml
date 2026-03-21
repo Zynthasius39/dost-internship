@@ -4,6 +4,7 @@
 # the kubernetes normally puts in /srv/kubernetes.
 # This puts them in a sane location and namespace.
 # Editing those values will almost surely break something.
+kube_version: 1.34.5
 kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
 kube_manifest_dir: "{{ kube_config_dir }}/manifests"
@@ -118,11 +119,11 @@ kube_apiserver_port: 6443  # (https)
 # Kube-proxy proxyMode configuration.
 # Can be ipvs, iptables, nftables
 # TODO: it needs to be changed to nftables when the upstream use nftables as default
-kube_proxy_mode: ipvs
+kube_proxy_mode: nftables
 
 # configure arp_ignore and arp_announce to avoid answering ARP queries from kube-ipvs0 interface
 # must be set to true for MetalLB, kube-vip(ARP enabled) to work
-kube_proxy_strict_arp: true
+kube_proxy_strict_arp: false
 
 # A string slice of values which specify the addresses to use for NodePorts.
 # Values may be valid IP blocks (e.g. 1.2.3.0/24, 1.2.3.4/32).

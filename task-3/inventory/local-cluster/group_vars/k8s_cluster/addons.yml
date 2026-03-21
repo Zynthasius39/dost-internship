@@ -151,8 +151,9 @@ metallb_config:
   address_pools:
     primary:
       ip_range:
-        - 10.0.20.0/22
+        - 192.168.122.128/25
       auto_assign: true
+      avoid_buggy_ips: true
   layer2:
     - primary
 calico_advertise_service_loadbalancer_ips: "{{ metallb_config.address_pools.primary.ip_range }}"

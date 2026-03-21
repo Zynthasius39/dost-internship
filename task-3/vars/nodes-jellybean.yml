@@ -1,26 +1,27 @@
 nodes:
-  - name: k8s-eclair-1
+  - name: "k8s-{{ cluster_codename }}-1"
     ip: 10.0.16.11
     mac: "52:54:00:0a:10:0b"
     memory: 4096
     vcpu: 2
     role: master
 
-  - name: k8s-eclair-2
+  - name: "k8s-{{ cluster_codename }}-2"
     ip: 10.0.16.12
     mac: "52:54:00:0a:10:0c"
     memory: 8192
     vcpu: 4
     role: worker
 
-  - name: k8s-eclair-3
+  - name: "k8s-{{ cluster_codename }}-3"
     ip: 10.0.16.13
     mac: "52:54:00:0a:10:0d"
     memory: 8192
     vcpu: 4
     role: worker
  
-cidr: /24
+cluster_codename: eclair  # Android 2
+node_subnet_prefix: /24
 gateway: 10.0.16.1
 nameservers:
   search:
@@ -29,8 +30,10 @@ nameservers:
     - 10.0.16.1
 
 os_name: debian13
+vol_pool: main
 vol_capacity: 10
+network: ovs.20
 base_image: /home/qemu/images/debian-13-genericcloud-amd64.qcow2
 
-ssh_public_key: "{{ 'keys/k8s-eclair.pub' | realpath }}"
-ssh_private_key: "{{ 'keys/k8s-eclair.key' | realpath }}"
+ssh_public_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/keys/k8s-eclair.pub"
+ssh_private_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/keys/k8s-eclair"
