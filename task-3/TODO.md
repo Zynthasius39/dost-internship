@@ -1,6 +1,7 @@
 # Kubernetes Cluster
 
 ## Mühit:
+- Kubespray
 - 1 Master Node, 2 Worker Node
 - İlk versiya: 1.32.x (Network Plugin: Calico 3.29 (Operator ilə))
 - Upgrade versiya: 1.34.x
