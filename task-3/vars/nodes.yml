@@ -35,5 +35,5 @@ vol_capacity: 10
 network: default
 base_image: /home/zynf/Documents/ISO/debian-13-genericcloud-amd64.qcow2
 
-ssh_public_key: "{{ 'keys/k8s-eclair.pub' | realpath }}"
-ssh_private_key: "{{ 'keys/k8s-eclair' | realpath }}"
+ssh_public_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/keys/k8s-eclair.pub"
+ssh_private_key: "{{ ansible_facts['env']['HOME'] }}/.ssh/keys/k8s-eclair"
