@@ -1,6 +1,6 @@
 ---
 - name: Set-up VMs on a KVM
-  hosts: localhost
+  hosts: kvm_hosts
   vars_files:
     - "{{ nodes_file | default('../vars/nodes.yml') }}"
   roles:
