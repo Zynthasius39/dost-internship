@@ -1,0 +1,20 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: null
+  labels:
+    release: monitoring
+  name: high-cpu-alert-rule
+spec:
+  groups:
+    - name: node-exporter
+      rules:
+        - alert: NodeCPUHighUsage80
+          expr: sum without (mode) (avg without (cpu) (rate(node_cpu_seconds_total{job="node-exporter",mode!~"idle|iowait"}[2m]))) * 100 > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage on node {{ $labels.instance }}"
+            description: "Node {{ $labels.instance }} has reported CPU utilization over 80% (current value: {{ $value | printf \"%.2f\" }}%)."
