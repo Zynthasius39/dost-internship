@@ -1,5 +1,6 @@
-# Task list
-Tasks reordered and rewritten for clarity
+# OpenSSL PKI
+
+<img src="img/openssl_logo_library.svg" width="400">
 
 ---
 <!-- toc -->
@@ -178,6 +179,10 @@ Tasks reordered and rewritten for clarity
 <!-- tocstop -->
 
 ---
+
+# Task list
+Tasks reordered and rewritten for clarity
+
 ## 1.1. Setting up a PKI
 
 ### Install **openssl**

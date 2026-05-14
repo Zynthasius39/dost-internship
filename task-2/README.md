@@ -1,5 +1,77 @@
 # Docker Compose
 
+<img src="img/docker-mark-ocean-blue.svg" width="100">
+
+---
+<!-- toc -->
+
+- [Docker Compose](#docker-compose)
+  - [Tələblər](#tələblər)
+    - [Lazımlı qovluqları
+      yarat](#lazımlı-qovluqları-yarat)
+    - [Loq qovluqlarının icazələrini
+      düzəlt](#loq-qovluqlarının-icazələrini-düzəlt)
+    - [Secret fayllarında istifadə etmək üçün kodlar
+      yarat](#secret-fayllarında-istifadə-etmək-üçün-kodlar-yarat)
+  - [Tapşırıq siyahısı](#tapşırıq-siyahısı)
+    - [Reverse Proxy
+      Layer](#reverse-proxy-layer)
+      - [NGINX container](#nginx-container)
+      - [Hostda 8080 portundan
+        açılmalıdır](#hostda-8080-portundan-açılmalıdır)
+      - [PHP requestləri application container-inə forward
+        etməlidir](#php-requestləri-application-container-inə-forward-etməlidir)
+      - [Config external fayldan gəlməlidir (image içində
+        olmamalıdır)](#config-external-fayldan-gəlməlidir-image-içində-olmamalıdır)
+      - [Container database şəbəkəsinə çıxış edə
+        bilməməlidir](#container-database-şəbəkəsinə-çıxış-edə-bilməməlidir)
+    - [Application Layer](#application-layer)
+      - [PHP-FPM container](#php-fpm-container)
+      - [Source kod hostdan mount
+        edilməlidir](#source-kod-hostdan-mount-edilməlidir)
+      - [DB ilə əlaqə
+        qurmalıdır](#db-ilə-əlaqə-qurmalıdır)
+      - [Healthcheck
+        olmalıdır](#healthcheck-olmalıdır)
+      - [Container crash edərsə restart
+        olunmalıdır](#container-crash-edərsə-restart-olunmalıdır)
+      - [Root user ilə
+        işləməməlidir](#root-user-ilə-işləməməlidir)
+    - [Database Layer](#database-layer)
+      - [MySQL 8 container](#mysql-8-container)
+      - [Data persistent
+        olmalıdır](#data-persistent-olmalıdır)
+      - [Root password plain text
+        yazılmamalıdır](#root-password-plain-text-yazılmamalıdır)
+      - [Application user ayrıca
+        yaradılmalıdır](#application-user-ayrıca-yaradılmalıdır)
+      - [DB container internetə çıxışı
+        olmamalıdır](#db-container-internetə-çıxışı-olmamalıdır)
+      - [Healthcheck
+        olmalıdır](#healthcheck-olmalıdır-1)
+    - [Network tələbləri](#network-tələbləri)
+      - [Minimum 2 ayrı Docker
+        network](#minimum-2-ayrı-docker-network)
+      - [Frontend DB-yə birbaşa qoşula
+        bilməməlidir](#frontend-db-yə-birbaşa-qoşula-bilməməlidir)
+      - [Application həm DB, həm Front network-də
+        olmalıdır](#application-həm-db-həm-front-network-də-olmalıdır)
+    - [Təhlükəsizlik
+      tələbləri](#təhlükəsizlik-tələbləri)
+      - [Secrets istifadə
+        olunmalıdır](#secrets-istifadə-olunmalıdır)
+    - [Production-a
+      hazırlıq](#production-a-hazırlıq)
+      - [Resource limits](#resource-limits)
+      - [Proper restart
+        policies](#proper-restart-policies)
+      - [Named volumes](#named-volumes)
+      - [.env istifadəsi](#env-istifadəsi)
+      - [Logging
+        stdout/stderr](#logging-stdoutstderr)
+
+<!-- tocstop -->
+
 ---
 ## Tələblər
 
