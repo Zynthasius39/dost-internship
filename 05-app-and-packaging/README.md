@@ -109,6 +109,10 @@ REPO=ghcr.io/zynthasius39/gopher
 TAG=1.0.0
 podman build src/gopher -t "$REPO:$TAG"
 podman image ls | grep "$REPO"
+<<<<<<< HEAD
+=======
+podman push --format v2s2 "$REPO:$TAG"
+>>>>>>> 56c8fb0 (feat: implement gopher app and packaging module)
 ```
 
 ```console
