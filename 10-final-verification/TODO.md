@@ -8,7 +8,7 @@ Layihənin struktur bütövlüyünün, təhlükəsizlik qaydalarının və sən�
 ## Task addımları
 1. Repozitoriyanın strukturunun tam olaraq bu şəkildə olduğunu yoxlayın:
    ├── app/
-   ├── helm/myapp/
+   ├── helm/gopher/
    ├── argocd/
    └── .github/workflows/
 2. `README.md` faylında layihənin sıfırdan qurulması və ayağa qaldırılması addımlarının tam, aydın şəkildə yazıldığından əmin olun.

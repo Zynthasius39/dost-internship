@@ -1,0 +1,7 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: dev.gopher.naquadah.alak
+      paths:
+        - path: /
+          pathType: Prefix

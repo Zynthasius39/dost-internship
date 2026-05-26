@@ -15,7 +15,7 @@ Bu mərhələdə GitHub Actions vasitəsilə tətbiqin avtomatik test edilməsi,
 6. Pipeline status badge-ini `README.md` faylına əlavə edin.
 7. ArgoCD-ni Kubernetes klasterinə qurun.
 8. ArgoCD UI-a daxil olun və default admin şifrəsini dəyişdirin.
-9. `argocd/apps/dev-app.yaml` manifestini yazın — `source: helm/myapp`, `valueFiles: [values.yaml, values-dev.yaml]`, `namespace: myapp-dev`, `syncPolicy: automated + selfHeal + prune`.
-10. `argocd/apps/prod-app.yaml` manifestini yazın — eyni struktur ilə, fərqli olaraq `values-prod.yaml` və `namespace: myapp-prod` istifadə edin.
+9. `argocd/apps/dev-app.yaml` manifestini yazın — `source: helm/gopher`, `valueFiles: [values.yaml, values-dev.yaml]`, `namespace: gopher-dev`, `syncPolicy: automated + selfHeal + prune`.
+10. `argocd/apps/prod-app.yaml` manifestini yazın — eyni struktur ilə, fərqli olaraq `values-prod.yaml` və `namespace: gopher-prod` istifadə edin.
 11. `argocd/root-app.yaml` manifestini yazın (App-of-Apps modeli) və `argocd/apps/` qovluğunu hədəf göstərin.
 12. Klasterdə yalnız `kubectl apply -f argocd/root-app.yaml` əmrini icra edin; qalan bütün resursların idarəçiliyini ArgoCD-yə buraxın.
