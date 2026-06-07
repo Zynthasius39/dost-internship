@@ -1,11 +1,3 @@
-# CI/CD & GitOps
-Bu mərhələdə GitHub Actions vasitəsilə tətbiqin avtomatik test edilməsi, imicin GHCR-ə push olunması, GitOps manifestlərinin yenilənməsi və ArgoCD App-of-Apps modeli ilə mühitlərin avtomatik sinxronizasiyası qurulur.
-
-## Mühit
-- Kubernetes cluster
-* ArgoCD
-* GitHub repository (packages enabled)
-
 ## Task addımları
 1. `.github/workflows/ci.yaml` faylını yaradın.
 2. Workflow daxilində **Job 1 (lint-and-test)** qurun: `helm lint` yoxlamasını icra etsin.
