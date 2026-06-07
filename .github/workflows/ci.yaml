@@ -1,0 +1,75 @@
+name: App & Chart Integration Pipeline
+
+on:
+  push:
+    branches: [ actions ]
+  pull_request:
+    branches: [ actions ]
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install helm
+        uses: azure/setup-helm@v5
+        id: install
+
+      - name: Lint Code Base
+        run: helm lint deploy/helm/gopher
+
+  build-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.actor }}/${{ vars.APP_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=long
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v7
+        with:
+          context: src/${{ vars.APP_NAME }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  update-chart:
+    runs-on: ubuntu-latest
+    needs: build-image
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Update Image Tag in values-prod.yaml
+        run: yq -i '.image.tag = "sha-${{ github.sha }}"' deploy/helm/${{ vars.APP_NAME }}/values-prod.yaml
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add deploy/helm/${{ vars.APP_NAME }}/values-prod.yaml
+          git commit -m "chore(ci): bump image tag to sha-${{ github.sha }} [skip ci]"
+          git push origin "$GITHUB_REF_NAME"
