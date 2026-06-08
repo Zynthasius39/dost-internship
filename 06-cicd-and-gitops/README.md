@@ -3,14 +3,15 @@ Bu mərhələdə GitHub Actions vasitəsilə tətbiqin avtomatik test edilməsi,
 
 ## Mühit
 - Kubernetes cluster
-* ArgoCD
-* GitHub repository (packages enabled)
+- ArgoCD
+- GitHub repository (packages enabled)
 
 ## Task addımları
 
 ### 1. `.github/workflows/ci.yaml` faylını yaradın.
 
 #### 1.1. Workflow faylını və qovluğunu yaradın
+
 ```sh
 mkdir -p .github/workflows
 touch .github/workflows/ci.yaml
@@ -54,11 +55,12 @@ Value: gopher
 ### 5. GHCR tokenini GitHub Secrets-ə əlavə edin və workflow daxilində `secrets.GITHUB_TOKEN` vasitəsilə istifadə edin.
 
 ```diff
-@@ -19,3 +19,37 @@ jobs:
+@@ -19,3 +19,37 @@
 jobs:
 
 +  build-image:
 +    runs-on: ubuntu-latest
++    needs: helm-lint
 +    permissions:
 +      packages: write
 +    steps:
