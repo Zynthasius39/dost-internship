@@ -5,11 +5,10 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-
 hpa:
   enabled: true
-
 serviceMonitor:
   enabled: true
-
 replicaCount: 3
+image:
+  tag: sha-5a304cf2cb76a404a660024a3eecb6ab3d1f7663
