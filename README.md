@@ -1,5 +1,7 @@
 # DOST Internship
 
+[![App & Chart Integration Pipeline](https://github.com/Zynthasius39/dost-internship/actions/workflows/ci.yaml/badge.svg)](https://github.com/Zynthasius39/dost-internship/actions/workflows/ci.yaml)
+
 ## 01-openssl-pki | OpenSSL PKI (Müstəqil Laboratoriya)
 - [**Tapşırıq izahları**](01-openssl-pki/README.md)
 - [Dəyişdirilməmiş ilkin tapşırıqlar](01-openssl-pki/TODO.md)

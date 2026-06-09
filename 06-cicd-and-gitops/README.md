@@ -125,6 +125,22 @@ jobs:
 
 ### 6. Pipeline status badge-ini `README.md` faylına əlavə edin.
 
+#### 6.1. GitHub-da repozitoriyanın **Actions** səhifəsinə keçid edin.
+
+#### 6.2. Sol paneldə yaratdığımız workflow-u seçin.
+
+#### 6.3. Səhifənin sağ tərəfində, "Filter workflow runs" sahəsinin yanında açılan menyunu klikləyib **Create status badge** seçin.
+
+#### 6.4. **Copy status badge Markdown** düyməsini klikləyin və markdown-u `README.md` faylına əlavə edin.
+
+```diff
+@@ -1,5 +1,7 @@
+ # DOST Internship
+ 
++[![App & Chart Integration Pipeline](https://github.com/Zynthasius39/dost-internship/actions/workflows/ci.yaml/badge.svg)](https://github.com/Zynthasius39/dost-internship/actions/workflows/ci.yaml)
++
+```
+
 ### 7. ArgoCD-ni Kubernetes klasterinə qurun.
 
 ### 8. ArgoCD UI-a daxil olun və default admin şifrəsini dəyişdirin.
