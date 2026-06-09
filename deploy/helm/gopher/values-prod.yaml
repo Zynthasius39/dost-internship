@@ -11,4 +11,4 @@ serviceMonitor:
   enabled: true
 replicaCount: 3
 image:
-  tag: sha-5a304cf2cb76a404a660024a3eecb6ab3d1f7663
+  tag: sha-9addb3f934fff05286e96c72f5b9a1fde15d1001
