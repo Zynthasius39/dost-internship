@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+  labels:
+    service.kubernetes.io/advertise-bgp: "true"
+  annotations:
+    ingress.cilium.io/tls-passthrough: enabled
+spec:
+  ingressClassName: cilium
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: argocd-server
+              port:
+                name: https
+      host: argocd.naquadah.alak

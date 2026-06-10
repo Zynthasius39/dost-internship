@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gopher-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Zynthasius39/dost-internship.git
+    targetRevision: HEAD
+    path: deploy/helm/gopher
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gopher-dev
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
