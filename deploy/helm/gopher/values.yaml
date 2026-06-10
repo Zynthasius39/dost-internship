@@ -6,7 +6,8 @@ image:
 ingress:
   enabled: false
   className: cilium
-  annotations: {}
+  annotations:
+    ingress.cilium.io/loadbalancer-mode: shared
   hosts: []
   tls: []
 
