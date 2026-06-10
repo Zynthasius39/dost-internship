@@ -21,10 +21,10 @@
 - [**Tapşırıq izahları**](04-k8s-gateway-monitoring-scaling/README.md)
 - [Dəyişdirilməmiş ilkin tapşırıqlar](04-k8s-gateway-monitoring-scaling/TODO.md)
 
-> [!NOTE]  
-> TODO: Gündəlik tasklarını qeyd et
+## 99-journal | Gündəlik
+- [**İş günləri və tapşırıqlar**](JOURNAL.md)
 
-## Repozitoriya Strukturu
+# Repozitoriya Strukturu
 
 Bu repozitoriyada qarşılaşacağınız tapşırıqlar iki fərqli xarakter daşıyır:
 1. **Standalone Labs:** `01-04` arası bəzi tapşırıqlar sırf konseptual mənimsəmə xarakterlidir və yekun tətbiq infrastrukturuna daxil deyil.
