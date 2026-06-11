@@ -19,12 +19,24 @@ var (
 		[]string{"endpoint", "method", "status"},
 	)
 	httpDuration = prometheus.NewHistogramVec(
-		prometheus.HistogramOpts{
-			Name:    "http_request_duration_seconds",
-			Help:    "Duration of HTTP requests in seconds",
-			Buckets: prometheus.DefBuckets,
-		},
-		[]string{"endpoint"},
+    prometheus.HistogramOpts{
+        Name: "http_request_duration_seconds",
+        Help: "Duration of HTTP requests in seconds",
+        Buckets: []float64{
+            0.0001, // 0.1ms
+            0.0005, // 0.5ms
+            0.001,  // 1ms
+            0.002,  // 2ms
+            0.003,  // 3ms
+            0.005,  // 5ms
+            0.0075, // 7.5ms
+            0.01,   // 10ms
+            0.025,  // 25ms
+            0.05,   // 50ms
+            0.1,    // 100ms
+        },
+    },
+    []string{"endpoint"},
 	)
 	httpErrorsTotal = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
