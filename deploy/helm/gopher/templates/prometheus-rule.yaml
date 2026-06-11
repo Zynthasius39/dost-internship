@@ -1,0 +1,38 @@
+{{- if .Values.prometheusRule.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "gopher.fullname" . }}
+  labels:
+    {{- include "gopher.labels" . | nindent 4 }}
+spec:
+  groups:
+    - name: gopher-alert-rules
+      rules:
+        - alert: HighErrorRate
+          expr: (sum(rate(http_errors_total{namespace="{{ .Release.Namespace }}"}[2m])) by (pod) / sum(rate(http_requests_total{namespace="{{ .Release.Namespace }}"}[2m])) by (pod)) * 100 > 5
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High HTTP error rate on pod {{ "{{" }} $labels.pod {{ "}}" }}"
+            description: "The HTTP error rate for pod {{ "{{" }} $labels.pod {{ "}}" }} in namespace {{ "{{" }} $labels.namespace {{ "}}" }} is {{ "{{" }} $value | printf \"%.2f\" {{ "}}" }}%, which is above the 5% threshold."
+
+        - alert: HighLatency
+          expr: histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{namespace="{{ .Release.Namespace }}"}[5m])) by (le, pod)) > 0.5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High P99 latency on pod {{ "{{" }} $labels.pod {{ "}}" }}"
+            description: "The P99 HTTP latency for pod {{ "{{" }} $labels.pod {{ "}}" }} in namespace {{ "{{" }} $labels.namespace {{ "}}" }} is {{ "{{" }} $value | printf \"%.3f\" {{ "}}" }}s, which is above the 500ms threshold."
+
+        - alert: PodCrashLooping
+          expr: sum(rate(kube_pod_container_status_restarts_total{namespace="{{ .Release.Namespace }}"}[5m])) by (pod) > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod {{ "{{" }} $labels.pod {{ "}}" }} is crash looping"
+            description: "The pod {{ "{{" }} $labels.pod {{ "}}" }} in namespace {{ "{{" }} $labels.namespace {{ "}}" }} has container restarts rate above 0/sec for the last 5 minutes."
+{{- end }}

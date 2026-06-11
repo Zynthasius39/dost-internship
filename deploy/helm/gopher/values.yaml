@@ -27,3 +27,6 @@ service:
 
 serviceMonitor:
   enabled: false
+
+prometheusRule:
+  enabled: false
