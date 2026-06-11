@@ -1,11 +1,3 @@
-# Dayanıqlılıq və Yoxlama (Resilience & validation)
-Yekun mərhələdə Helm Hook vasitəsilə deploy-sonrası testlərin aparılması, bilərəkdən səhv konfiqurasiya edilərək rollback (geri qaytarma) mexanizmlərinin sınanması və git push addımından ArgoCD sinxronizasiyasına qədər bütün axının validation-ı həyata keçirilir.
-
-## Mühit
-* Kubernetes cluster
-* ArgoCD UI / CLI
-* Git Repository
-
 ## Task addımları
 1. `templates/post-install-test.yaml` adlı Helm hook manifesti yaradın.
 2. Manifest daxilində annotations bölməsini təyin edin: `helm.sh/hook: post-install,post-upgrade` və `helm.sh/hook-delete-policy: hook-succeeded`.
