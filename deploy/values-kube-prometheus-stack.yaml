@@ -1,0 +1,12 @@
+grafana:
+  admin:
+    existingSecret: grafana-admin-secret
+  defaultDashboardsTimezone: Asia/Baku
+  ingress:
+    enabled: true
+    ingressClassName: cilium
+    hosts:
+      - grafana.naquadah.alak
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
