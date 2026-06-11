@@ -1,0 +1,22 @@
+{{- if .Values.alertmanagerConfig.enabled }}
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ include "gopher.fullname" . }}
+  labels:
+    {{- include "gopher.labels" . | nindent 4 }}
+spec:
+  route:
+    groupBy: ['alertname', 'namespace']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+    receiver: 'discord-notifications'
+  receivers:
+    - name: 'discord-notifications'
+      discordConfigs:
+        - apiURL:
+            name: discord-webhook-secret
+            key: url
+          sendResolved: true
+{{- end }}

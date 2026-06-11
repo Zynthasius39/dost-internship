@@ -30,3 +30,6 @@ serviceMonitor:
 
 prometheusRule:
   enabled: false
+
+alertmanagerConfig:
+  enabled: false
