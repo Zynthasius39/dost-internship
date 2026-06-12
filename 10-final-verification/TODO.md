@@ -1,10 +1,3 @@
-# Final verification
-Layihənin struktur bütövlüyünün, təhlükəsizlik qaydalarının və sənədləşmənin son yoxlama meyarları əsasında təsdiqlənməsi.
-
-## Mühit
-* Git Repository
-* Documentation (README.md)
-
 ## Task addımları
 1. Repozitoriyanın strukturunun tam olaraq bu şəkildə olduğunu yoxlayın:
    ├── app/

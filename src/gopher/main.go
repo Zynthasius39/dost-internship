@@ -94,7 +94,7 @@ func main() {
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"version": "1.0.0"})
+		json.NewEncoder(w).Encode(map[string]string{"version": "1.0.2"})
 	}))
 
 	http.HandleFunc("/health", monitor("health", func(w http.ResponseWriter, r *http.Request) {
