@@ -5,8 +5,8 @@
     "name": "adg5d8s",
     "namespace": "default",
     "uid": "b48f69a8-4045-4b16-a634-da43d8954379",
-    "resourceVersion": "1781188292602984",
-    "generation": 8,
+    "resourceVersion": "1781287463137981",
+    "generation": 11,
     "creationTimestamp": "2026-06-11T12:07:21Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "2394578077188096"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.0.1+security-01 (9bbe672d)",
       "grafana.app/updatedBy": "user:bfosw7bma7jeof",
-      "grafana.app/updatedTimestamp": "2026-06-11T14:31:32Z"
+      "grafana.app/updatedTimestamp": "2026-06-12T18:04:23Z"
     }
   },
   "spec": {
@@ -68,7 +68,7 @@
                       "spec": {
                         "editorMode": "builder",
                         "expr": "rate(http_requests_total{namespace=\"$Namespace\"}[5m])",
-                        "legendFormat": "{{status}}",
+                        "legendFormat": "{{pod}}_{{status}}",
                         "range": true
                       }
                     },
@@ -156,7 +156,40 @@
                     }
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "scope": "series",
+                      "options": "Not Found"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "yellow",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "scope": "series",
+                      "options": "OK"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "green",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -185,7 +218,7 @@
                       },
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(rate(http_errors_total{namespace=\"gopher-prod\"}[5m])) \n/\nsum(rate(http_requests_total{namespace=\"gopher-prod\"}[5m])) * 100",
+                        "expr": "sum(rate(http_errors_total{namespace=\"$Namespace\"}[5m])) \n/\nsum(rate(http_requests_total{namespace=\"$Namespace\"}[5m])) * 100",
                         "legendFormat": "__auto",
                         "range": true
                       }

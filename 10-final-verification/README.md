@@ -27,9 +27,86 @@ Layihənin sıfırdan qurulması və ayağa qaldırılması addımları tam və 
 5. **Alerting və Yük Testi (Load Testing):** PrometheusRule alertləri, Alertmanager Discord webhook inteqrasiyası və `hey` vasitəsilə yük testləri.
 6. **Dayanıqlılıq və Yoxlama (Resilience & Validation):** Helm hook ilə post-install testləri, rollback ssenarisi və sağlamlıq endpoint yoxlamaları.
 
-
 ### 3. Repozitoriyada heç bir gizli məlumatın (secret, token, şifrə) plain-text (açıq mətn) formasında qalmadığını yoxlayın.
+
+```sh
+gitleaks detect --source . --verbose --report-path=secrets-report.json --platform github
+```
+```console
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+9:46PM INF 48 commits scanned.
+9:46PM INF scanned ~613730 bytes (613.73 KB) in 122ms
+9:46PM INF no leaks found
+```
 
 ### 4. Kodun repozitoriyaya `git push` olunmasından başlayaraq ArgoCD-nin mühiti tam sinxronizasiya etməsinə qədər olan bütün CI/CD və GitOps axınını bir dəfə canlı olaraq demo/test edin.
 
+#### 4.1. Yenilikdən əvvəl applikasiyanın versiyasına baxın
+
+```sh
+curl http://gopher.naquadah.alak
+```
+```json
+{"version":"1.0.0"}
+```
+
+#### 4.2. Gopher applikasiyasının versiyasını kodda qaldırın
+
+[main.go](src/gopher/main.go)
+```diff
+@@ -94,7 +94,7 @@ func main() {
+-    json.NewEncoder(w).Encode(map[string]string{"version": "1.0.0"})
++    json.NewEncoder(w).Encode(map[string]string{"version": "1.0.2"})
+```
+
+#### 4.3. Dəyişikliyi commit edib push edin
+
+Commit-də `skip ca` ifadəsindən etmirik ki, CI pipeline-ı işə düşsün.
+
+```sh
+git add src/gopher
+git commit -m "chore: bump gopher app version to 1.0.2"
+git push origin main
+```
+
+#### 4.4. Actions-un icrasını müşahidə edin
+
+![](<img/Screen Shot 2026-06-12 at 21.56.12.png>)
+![](<img/Screen Shot 2026-06-12 at 21.56.14.png>)
+![](<img/Screen Shot 2026-06-12 at 21.56.31.png>)
+
+#### 4.5. ArgoCD-də sync prosesini müşahidə edin
+
+![](<img/Screen Shot 2026-06-12 at 21.57.24.png>)
+
+#### 4.6. Yenilikdən sonra applikasiyanın versiyasına baxın
+
+```sh
+curl http://gopher.naquadah.alak
+```
+```json
+{"version":"1.0.2"}
+```
+
 ### 5. Prometheus monitorinqinin işlədiyini və bütün metrikaların Grafana panellərində data göstərdiyini, dashboard JSON faylının repoda mövcudluğunu son dəfə təsdiqləyin.
+
+#### 5.1. Grafana dashboard-ı müşahidə edin
+
+- Yenilik sonrasından dərhal olduğu üçün **Memory Usage** hissəsində kəsinti müşahidə olunur
+- Yenilikdən sonra `hey` vasitəsilə 98% hədəfli load **Request Rate**, **Error Rate** və **Availability** panellərində əks olunur
+
+![](<img/Screen Shot 2026-06-12 at 22.09.27.png>)
+#### 5.2. Bu dashobard-ın export faylının mövcudluğunu yoxlayın
+
+```sh
+ls grafana/dashboards/slo.json
+```
+```console
+grafana/dashboards/slo.json
+```
