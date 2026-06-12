@@ -15,4 +15,4 @@ alertmanagerConfig:
   enabled: true
 replicaCount: 3
 image:
-  tag: sha-77f70f65ea9107b8884b89f77b09a0f5712680c9
+  tag: sha-7a96421fa9f5ba0aceec4214635088c9c3ab823f
