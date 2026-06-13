@@ -1,4 +1,7 @@
 # App & packaging
+
+<img src="img/oci-image-disk.png" width="256">
+
 Bu mərhələdə minimal tətbiqin (Python/Go/Node.js) yazılması, Prometheus metrikalarının inteqrasiyası, Multi-stage Dockerfile ilə optimallaşdırılmış imicin yığılması və Helm Chart strukturunun dev/prod mühitlərinə uyğun hazırlanması təmin edilir.
 
 ## Mühit

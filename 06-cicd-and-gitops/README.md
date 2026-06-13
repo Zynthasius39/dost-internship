@@ -1,4 +1,7 @@
 # CI/CD & GitOps
+
+<img src="img/cicd.png" width="400">
+
 Bu mərhələdə GitHub Actions vasitəsilə tətbiqin avtomatik test edilməsi, imicin GHCR-ə push olunması, GitOps manifestlərinin yenilənməsi və ArgoCD App-of-Apps modeli ilə mühitlərin avtomatik sinxronizasiyası qurulur.
 
 ## Mühit

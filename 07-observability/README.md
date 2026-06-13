@@ -1,4 +1,7 @@
 # Observability
+
+<img src="img/opentelemetry.png" width="400">
+
 Bu mərhələdə klaster daxilində kube-prometheus-stack vasitəsilə monitorinq infrastrukturunun qurulması, ServiceMonitor ilə tətbiqdən metrikaların toplanması və Grafana üzərində əsas performans göstəricilərini (SLO) əks etdirən dashboard-un yaradılması reallaşdırılır.
 
 ## Mühit

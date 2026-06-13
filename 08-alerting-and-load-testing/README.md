@@ -1,4 +1,7 @@
 # Alerting & Load testing
+
+<img src="img/alertmanager.png" width="400">
+
 Bu mərhələdə infrastruktur və tətbiq xətalarına qarşı Alertmanager xəbərdarlıq mexanizminin (PrometheusRule) qurulması, Slack/Discord inteqrasiyası və yük testləri (`hey` / `ab`) vasitəsilə sistemin bu xəbərdarlıqlara reaksiyasının yoxlanılması həyata keçirilir.
 
 ## Mühit

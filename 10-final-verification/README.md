@@ -1,4 +1,7 @@
 # Final verification
+
+<img src="img/gitops.png" width="400">
+
 Layihənin struktur bütövlüyünün, təhlükəsizlik qaydalarının və sənədləşmənin son yoxlama meyarları əsasında təsdiqlənməsi.
 
 ## Mühit

@@ -3,6 +3,7 @@
 <img src="https://github.com/kubernetes/kubernetes/raw/master/logo/logo.png" width="100">
 
 ---
+
 ## Mühit
 - Kubespray
 - 1 master, 2 worker nodları
@@ -11,91 +12,7 @@
 - Güncəllənəcək versiya: 1.34.x
 
 ---
-<!-- toc -->
 
-- [Kubernetes Cluster](#kubernetes-cluster)
-  - [Mühit](#mühit)
-  - [Tapşırıq siyahısı](#tapşırıq-siyahısı)
-    - [1. Node-ları
-      hazırla](#1-node-ları-hazırla)
-      - [1.1. Yeni node-lar
-        yarat](#11-yeni-node-lar-yarat)
-      - [1.2. Yeni node-ları **known_hosts**-a əlavə
-        et](#12-yeni-node-ları-known_hosts-a-əlavə-et)
-    - [2. Master node-da cluster qaldır
-      (1.32.x)](#2-master-node-da-cluster-qaldır-132x)
-      - [2.1. Sample kubespray inventory-sini
-        köçür](#21-sample-kubespray-inventory-sini-köçür)
-      - [2.2. Inventory-də dəyişiklik
-        et](#22-inventory-də-dəyişiklik-et)
-      - [2.3. Kubespray konfiqurasiyasını
-        dəyiş](#23-kubespray-konfiqurasiyasını-dəyiş)
-      - [2.3. Kubespray-i collection kimi
-        quraşdır](#23-kubespray-i-collection-kimi-quraşdır)
-      - [2.4. Kubespray üçün spesifik ansible versiyasını
-        quraşdır](#24-kubespray-üçün-spesifik-ansible-versiyasını-quraşdır)
-      - [2.5. Playbook-u icra
-        et](#25-playbook-u-icra-et)
-    - [3. Kubectl konfiqurasiyasını
-      qur](#3-kubectl-konfiqurasiyasını-qur)
-    - [4. Calico Operator (3.29) tətbiq
-      et](#4-calico-operator-329-tətbiq-et)
-      - [4.1. Tigera Operator və custom CRD-lərini
-        quraşdır](#41-tigera-operator-və-custom-crd-lərini-quraşdır)
-      - [4.2. Calico Installation resursunu yüklə və dəyişiklik
-        et](#42-calico-installation-resursunu-yüklə-və-dəyişiklik-et)
-      - [4.2. Calico Installation resursunu
-        quraşdır](#42-calico-installation-resursunu-quraşdır)
-      - [4.3. Calico available olana qədər
-        gözlə](#43-calico-available-olana-qədər-gözlə)
-    - [5. Worker node-ları
-      qoş](#5-worker-node-ları-qoş)
-      - [5.1. Inventory-yə dəyişiklik
-        et](#51-inventory-yə-dəyişiklik-et)
-      - [5.2. Scale playbook-unu icra
-        et](#52-scale-playbook-unu-icra-et)
-      - [5.3. Cluster playbook-unu icra
-        et](#53-cluster-playbook-unu-icra-et)
-      - [5.4. MetalLB üçün BGPAdvertisement resurunu
-        quraşdır](#54-metallb-üçün-bgpadvertisement-resurunu-quraşdır)
-    - [6. Node statusunu
-      yoxla](#6-node-statusunu-yoxla)
-    - [7. Pod statusunu yoxla
-      (kube-system)](#7-pod-statusunu-yoxla-kube-system)
-    - [8. Əsas komponentlərin loglarını
-      çıxar](#8-əsas-komponentlərin-loglarını-çıxar)
-    - [9. Cluster upgrade et -- 1.34.x (master +
-      worker)](#9-cluster-upgrade-et--134x-master--worker)
-      - [9.1. Cluster playbook-unu icra et
-        (1.33.9)](#91-cluster-playbook-unu-icra-et-1339)
-      - [9.2. Cluster playbook-unu icra et
-        (1.34.5)](#92-cluster-playbook-unu-icra-et-1345)
-      - [9.2. Kubespray konfiqurasiyasını
-        dəyiş](#92-kubespray-konfiqurasiyasını-dəyiş)
-    - [10. Node statusunu
-      yoxla](#10-node-statusunu-yoxla)
-    - [11. Pod statusunu yoxla
-      (kube-system)](#11-pod-statusunu-yoxla-kube-system)
-    - [12. Əsas komponentlərin loglarını
-      çıxar](#12-əsas-komponentlərin-loglarını-çıxar)
-    - [13. Hər addımın ekran görüntüsünü və loglarını
-      paylaş](#13-hər-addımın-ekran-görüntüsünü-və-loglarını-paylaş)
-    - [14. Final cluster statusunu
-      paylaş](#14-final-cluster-statusunu-paylaş)
-    - [15. (ƏLAVƏ) Calico-nu
-      güncəllə](#15-əlavə-calico-nu-güncəllə)
-      - [15.1. Tigera Operator və custom CRD-lərini
-        yüklə](#151-tigera-operator-və-custom-crd-lərini-yüklə)
-      - [15.2. Güncəlləməni
-        başlat](#152-güncəlləməni-başlat)
-      - [15.3. Flow logs və Calico Whisker-i
-        quraşdır](#153-flow-logs-və-calico-whisker-i-quraşdır)
-      - [15.4. Calico available olana qədər
-        gözlə](#154-calico-available-olana-qədər-gözlə)
-
-<!-- tocstop -->
-
----
 ## Tapşırıq siyahısı
 
 ### 1. Node-ları hazırla
