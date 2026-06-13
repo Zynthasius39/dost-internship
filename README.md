@@ -4,6 +4,11 @@
 
 <img src="dost-rim-logo.jpg" width="256">
 
+## 00-journal | Gündəlik, hesabat və digər bələdçilər
+- [**İş günləri və tapşırıqlar**](JOURNAL.md)
+- [Hesabat](REPORT.md)
+- [Quraşdırmaq üçün bələdçi](INSTALL.md)
+
 ## 01-openssl-pki | Fərdi OpenSSL PKI infrastrukturu
 - [**Tapşırıq izahları**](01-openssl-pki/README.md)
 - [Dəyişdirilməmiş ilkin tapşırıqlar](01-openssl-pki/TODO.md)
@@ -46,9 +51,6 @@
 ## 10-final-verification | Yekun təsdiqləmə (Final verification)
 - [**Tapşırıq izahları**](10-final-verification/README.md)
 - [Dəyişdirilməmiş ilkin tapşırıqlar](10-final-verification/TODO.md)
-
-## 99-journal | Gündəlik
-- [**İş günləri və tapşırıqlar**](JOURNAL.md)
 
 # Repozitoriya Strukturu
 
